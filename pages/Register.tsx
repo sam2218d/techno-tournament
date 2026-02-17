@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { GameType } from '../types';
-import { GAMES_CONFIG } from '../config';
+import { GAMES_CONFIG, TOURNAMENT_CONFIG } from '../config';
 import { registerTeam, uploadScreenshot } from '../services/supabase';
 import { generateTeamName } from '../services/geminiService';
 import { Button, Input, Select, Card } from '../components/UI';
@@ -242,18 +242,25 @@ const Register: React.FC = () => {
             <h3 className="text-xl font-display font-bold text-white mb-4 text-center">Payment Details</h3>
 
             <div className="bg-white p-4 rounded mb-6 mx-auto w-48 h-48 flex items-center justify-center">
-              {/* Generates a QR code for UPI payment. Replace 'pa' (payee address) and 'pn' (payee name) */}
-              <img
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=tournament@upi&pn=NexusEsports&am=${currentGameConfig.fee}&cu=INR`}
-                alt="UPI QR Code"
-                className="w-full h-full"
-              />
+              {TOURNAMENT_CONFIG.payment?.qrCodeImage ? (
+                <img
+                  src={TOURNAMENT_CONFIG.payment.qrCodeImage}
+                  alt="Payment QR Code"
+                  className="w-full h-full object-contain"
+                />
+              ) : (
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${TOURNAMENT_CONFIG.payment?.upiId || 'tournament@upi'}&pn=NexusEsports&am=${currentGameConfig.fee}&cu=INR`}
+                  alt="UPI QR Code"
+                  className="w-full h-full"
+                />
+              )}
             </div>
 
             <div className="text-center mb-6 space-y-2">
               <p className="text-gray-400 text-sm">Scan QR to pay</p>
               <p className="text-3xl font-bold text-white">₹{currentGameConfig.fee}</p>
-              <p className="text-xs text-gray-500">UPI ID: tournament@upi</p>
+              <p className="text-xs text-gray-500">UPI ID: {TOURNAMENT_CONFIG.payment?.upiId || 'tournament@upi'}</p>
             </div>
 
             <div className="border-t border-white/10 pt-6">

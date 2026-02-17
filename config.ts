@@ -31,6 +31,14 @@ export const TOURNAMENT_CONFIG = {
         role: "Tournament Director",
         avatar: "/assets/creator-avatar.png", // Placeholder, will be replaced by generated image
         instagram: "https://www.instagram.com/samrat_chowdhury___?igsh=NTc4MTIwNjQ2YQ=="
+    },
+
+    // Payment Configuration
+    payment: {
+        // If qrCodeImage is provided, it will be used instead of the generated one.
+        // Place your QR code image in the public/assets folder.
+        qrCodeImage: "/assets/payment-qr.png",
+        upiId: "tournament@upi" // Fallback UPI ID
     }
 };
 
