@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    background-image:
+        linear-gradient(rgba(37, 106, 244, 0.05) 1px, transparent 1px),
+        linear-gradient(90px, rgba(37, 106, 244, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-color: #f5f6f8; /* background-light */
+}
+
+/* Dark mode override if needed, though html has class="dark" usually */
+.dark body {
+    background-color: #0D0D0D; /* background-dark */
+}
+
+.glass {
+    background: rgba(22, 27, 34, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero-glow {
+    text-shadow: 0 0 20px rgba(37, 106, 244, 0.6);
+}
+
+.neon-border-orange {
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    box-shadow: 0 0 15px rgba(255, 107, 0, 0.1);
+}
+
+.neon-border-yellow {
+    border: 1px solid rgba(255, 204, 0, 0.3);
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.1);
+}
+
+.neon-border-purple {
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.1);
+}

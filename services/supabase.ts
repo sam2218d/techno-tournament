@@ -1,0 +1,134 @@
+/// <reference types="vite/client" />
+import { createClient } from '@supabase/supabase-js';
+import { Team, PaymentStatus, GameType } from '../types';
+
+// NOTE: These should be in environment variables in a real production app.
+// For this demo, we'll hardcode them or use import.meta.env
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// --- Auth Services ---
+export const signInWithEmail = async (email: string, password: string) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+    });
+    if (error) throw error;
+    return data.user;
+};
+
+export const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+};
+
+export const subscribeToAuth = (callback: (user: any) => void) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        callback(session?.user || null);
+    });
+    return () => subscription.unsubscribe();
+};
+
+// --- Storage Services ---
+export const uploadScreenshot = async (file: File, teamName: string): Promise<string> => {
+    try {
+        const timestamp = Date.now();
+        // Sanitize file name
+        const sanitizedName = file.name.replace(/[^a-zA-Z0-9.]/g, '_');
+        const path = `${teamName}_${timestamp}_${sanitizedName}`;
+
+        // Upload the file
+        const { error: uploadError } = await supabase.storage
+            .from('screenshots')
+            .upload(path, file);
+
+        if (uploadError) throw uploadError;
+
+        // Get the public URL
+        const { data: { publicUrl } } = supabase.storage
+            .from('screenshots')
+            .getPublicUrl(path);
+
+        return publicUrl;
+    } catch (error) {
+        console.error("Upload failed", error);
+        throw error;
+    }
+};
+
+// --- Database Services ---
+export const registerTeam = async (teamData: Omit<Team, 'id' | 'status' | 'timestamp'>) => {
+    try {
+        // Transform data to match snake_case columns
+        const dbData = {
+            team_name: teamData.teamName,
+            game: teamData.game,
+            players: teamData.players,
+            substitute: teamData.substitute,
+            captain_phone: teamData.captainPhone,
+            captain_whatsapp: teamData.captainWhatsapp,
+            payment_screenshot_url: teamData.paymentScreenshotUrl,
+            status: 'Pending' // Default
+        };
+
+        const { error } = await supabase
+            .from('teams')
+            .insert([dbData]);
+
+        if (error) throw error;
+        return;
+    } catch (error) {
+        console.error("Error adding document: ", error);
+        throw error;
+    }
+};
+
+export const getTeams = async (gameFilter?: GameType): Promise<Team[]> => {
+    try {
+        let query = supabase
+            .from('teams')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (gameFilter) {
+            query = query.eq('game', gameFilter);
+        }
+
+        const { data, error } = await query;
+
+        if (error) throw error;
+
+        // Transform snake_case back to camelCase for app usage
+        return data.map((item: any) => ({
+            id: item.id,
+            teamName: item.team_name,
+            game: item.game as GameType,
+            players: item.players,
+            substitute: item.substitute,
+            captainPhone: item.captain_phone,
+            captainWhatsapp: item.captain_whatsapp,
+            paymentScreenshotUrl: item.payment_screenshot_url,
+            status: item.status as PaymentStatus,
+            timestamp: new Date(item.created_at).getTime()
+        }));
+    } catch (error) {
+        console.error("Error fetching teams", error);
+        return [];
+    }
+};
+
+export const updateTeamStatus = async (teamId: string, status: PaymentStatus) => {
+    try {
+        const { error } = await supabase
+            .from('teams')
+            .update({ status })
+            .eq('id', teamId);
+
+        if (error) throw error;
+    } catch (error) {
+        console.error("Error updating status", error);
+        throw error;
+    }
+};
