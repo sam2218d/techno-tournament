@@ -8,6 +8,11 @@ export const TOURNAMENT_CONFIG = {
     seasonName: "Season 4",
     isLive: true,
 
+    // Admin Access Control
+    // Add your email here to access the admin panel
+    adminEmails: ["sam@gmail.com"],
+    superAdminEmails: ["samratchabc123@gmail.com"],
+
     // Hero Section Texts
     hero: {
         titleLine1: "BATTLE FOR",

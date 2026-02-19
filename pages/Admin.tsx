@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getTeams, updateTeamStatus, signInWithEmail, signOut, subscribeToAuth } from '../services/supabase';
+import { getTeams, updateTeamStatus, signInWithEmail, signOut, subscribeToAuth, deleteTeam, restoreTeam } from '../services/supabase';
+import { TOURNAMENT_CONFIG } from '../config';
 import { Team, GameType, PaymentStatus } from '../types';
 import { Button, Select, Card, Input } from '../components/UI';
 
@@ -28,8 +29,9 @@ const Admin: React.FC = () => {
   useEffect(() => {
     if (user) {
       const fetchTeams = async () => {
+        const isSuperAdmin = TOURNAMENT_CONFIG.superAdminEmails?.includes(user.email);
         const gameFilter = filter !== 'ALL' ? (filter as GameType) : undefined;
-        const data = await getTeams(gameFilter);
+        const data = await getTeams(gameFilter, isSuperAdmin);
         setTeams(data);
       };
       fetchTeams();
@@ -57,6 +59,26 @@ const Admin: React.FC = () => {
       setRefresh(prev => prev + 1);
     } catch (e) {
       alert("Failed to update status");
+    }
+  };
+
+  const handleDelete = async (teamId: string, isSuperAdmin: boolean) => {
+    if (!confirm(isSuperAdmin ? "Are you sure you want to PERMANENTLY delete this team?" : "Are you sure you want to delete this team?")) return;
+    try {
+      await deleteTeam(teamId, isSuperAdmin);
+      setRefresh(prev => prev + 1);
+    } catch (e) {
+      alert("Failed to delete team");
+    }
+  };
+
+  const handleRestore = async (teamId: string) => {
+    if (!confirm("Restore this team?")) return;
+    try {
+      await restoreTeam(teamId);
+      setRefresh(prev => prev + 1);
+    } catch (e) {
+      alert("Failed to restore team");
     }
   };
 
@@ -107,6 +129,27 @@ const Admin: React.FC = () => {
             {loginError && <p className="text-red-500 text-sm text-center">{loginError}</p>}
             <Button type="submit" className="w-full">Sign In</Button>
           </form>
+        </Card>
+      </div>
+    );
+  }
+
+  // Check if user is authorized admin
+  // Based on your previous request, the default email is likely the admin.
+  // CRITICAL: Ensure your email is in TOURNAMENT_CONFIG.adminEmails in config.ts
+  const isAdmin = TOURNAMENT_CONFIG.adminEmails?.includes(user.email);
+  const isSuperAdmin = TOURNAMENT_CONFIG.superAdminEmails?.includes(user.email);
+
+  if (!isAdmin && !isSuperAdmin) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center p-4">
+        <Card className="max-w-md w-full py-8 border-red-500 text-center">
+          <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="material-symbols-outlined text-3xl text-red-500">lock</span>
+          </div>
+          <h2 className="text-2xl font-bold text-white mb-2">Access Denied</h2>
+          <p className="text-gray-400 mb-6">Your account ({user.email}) is not authorized to access the admin panel.</p>
+          <Button variant="outline" onClick={handleLogout}>Sign Out</Button>
         </Card>
       </div>
     );
@@ -314,6 +357,26 @@ const Admin: React.FC = () => {
                           </>
                         )}
                         {team.status !== PaymentStatus.PENDING && <span className="text-gray-600 text-xs">-</span>}
+
+                        {/* Restore Button (Super Admin Only) */}
+                        {isSuperAdmin && team.hiddenFromAdmin && (
+                          <button
+                            onClick={() => handleRestore(team.id!)}
+                            className="bg-blue-500/20 text-blue-500 p-2 hover:bg-blue-500 hover:text-white transition-colors rounded"
+                            title="Restore Team"
+                          >
+                            <span className="material-symbols-outlined text-sm">restore_from_trash</span>
+                          </button>
+                        )}
+
+                        {/* Delete Button */}
+                        <button
+                          onClick={() => handleDelete(team.id!, isSuperAdmin || false)}
+                          className="bg-red-500/10 text-red-500 p-2 hover:bg-red-500 hover:text-white transition-colors rounded"
+                          title={isSuperAdmin ? "Delete Permanently" : "Delete"}
+                        >
+                          <span className="material-symbols-outlined text-sm">delete</span>
+                        </button>
                       </div>
                     </td>
                   </tr>

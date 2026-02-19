@@ -26,6 +26,8 @@ export interface Team {
   paymentScreenshotUrl?: string; // URL from Firebase Storage
   status: PaymentStatus;
   timestamp: number;
+  hiddenFromAdmin?: boolean;
+  permanentlyDeleted?: boolean;
 }
 
 
