@@ -250,7 +250,7 @@ const Register: React.FC = () => {
                 />
               ) : (
                 <img
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${TOURNAMENT_CONFIG.payment?.upiId || 'tournament@upi'}&pn=NexusEsports&am=${currentGameConfig.fee}&cu=INR`}
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${TOURNAMENT_CONFIG.payment?.upiId || 'tournament@upi'}&pn=PrayuktiTechfest&am=${currentGameConfig.fee}&cu=INR`}
                   alt="UPI QR Code"
                   className="w-full h-full"
                 />

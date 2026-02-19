@@ -11,15 +11,10 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       {/* Top Navigation (Glassmorphism) */}
       <nav className="fixed top-0 left-0 right-0 z-50 glass h-16 flex items-center justify-between px-6">
         <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-primary text-3xl">sports_esports</span>
-          <span className="font-bold text-xl tracking-tighter">
-            NEXUS<span className="text-primary">.GG</span>
-          </span>
+          {/* <span className="material-symbols-outlined text-primary text-3xl">sports_esports</span> */}
+          <img src="/assets/logo.png" alt="Prayukti Logo" className="h-10 w-auto" />
         </div>
         <div className="flex items-center gap-4">
-          <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
-            <span className="material-symbols-outlined">notifications</span>
-          </button>
           <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center border border-primary/40">
             <span className="material-symbols-outlined text-primary">person</span>
           </div>
