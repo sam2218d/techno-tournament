@@ -25,12 +25,35 @@ const Home: React.FC = () => {
   };
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [prizePoolAmount, setPrizePoolAmount] = useState<string>(`₹${TOURNAMENT_CONFIG.prizePool.baseAmount.toLocaleString()}`);
 
   useEffect(() => {
+    const fetchPrizePool = async () => {
+      try {
+        const { getActiveTeamCount } = await import('../services/supabase');
+        const activeTeams = await getActiveTeamCount();
+
+        // Update prize pool: Increase by 1000 for every 5 teams
+        const steps = Math.floor(activeTeams / TOURNAMENT_CONFIG.prizePool.incrementStep);
+        const totalAmount = TOURNAMENT_CONFIG.prizePool.baseAmount + (steps * TOURNAMENT_CONFIG.prizePool.incrementAmount);
+
+        setPrizePoolAmount(`₹${totalAmount.toLocaleString()}`);
+      } catch (error) {
+        console.error("Failed to fetch prize pool", error);
+      }
+    };
+
+    fetchPrizePool();
+    // Refresh every minute to keep it updated with new registrations
+    const interval = setInterval(fetchPrizePool, 60000);
+
     const timer = setTimeout(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      clearInterval(interval);
+    };
   });
 
   return (
@@ -81,7 +104,7 @@ const Home: React.FC = () => {
           {/* Prize Pool Highlight */}
           <div className="py-6 px-8 bg-surface-dark/80 border border-white/5 rounded-2xl inline-block shadow-2xl">
             <p className="text-[10px] uppercase tracking-[0.3em] text-slate-500 mb-1">Total Prize Pool</p>
-            <p className="text-4xl font-bold text-white tracking-tighter">{prizePool.totalAmount}</p>
+            <p className="text-4xl font-bold text-white tracking-tighter">{prizePoolAmount}</p>
             <div className="flex items-center justify-center gap-1 mt-2 text-[#0bda5e]">
               <span className="material-symbols-outlined text-sm">trending_up</span>
               <span className="text-xs font-bold uppercase tracking-wider">{prizePool.status}</span>

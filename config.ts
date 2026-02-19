@@ -20,9 +20,10 @@ export const TOURNAMENT_CONFIG = {
         description: "Join the elite circle of mobile esports. Compete against the best and claim your legacy.",
     },
 
-    // Prize Pool Section
     prizePool: {
-        totalAmount: "₹15,000",
+        baseAmount: 5000,
+        incrementAmount: 1000,
+        incrementStep: 5,
         status: "Growing every minute"
     },
 
@@ -55,8 +56,8 @@ export const GAMES_CONFIG = {
     [GameType.FREE_FIRE]: {
         id: 'ff',
         name: 'Free Fire',
-        fee: 100, // Entry fee in currency
-        prize: '₹5000',
+        fee: 200, // Entry fee in currency
+        prize: '₹2500',
         date: 'Oct 25, 2023',
         time: '20:00 GMT',
         slotsTotal: 100,
@@ -72,8 +73,8 @@ export const GAMES_CONFIG = {
     [GameType.BGMI]: {
         id: 'bgmi',
         name: 'BGMI',
-        fee: 100,
-        prize: '₹5000',
+        fee: 200,
+        prize: '₹2500',
         date: 'Oct 28, 2023',
         time: '15:30 GMT',
         slotsTotal: 100,
