@@ -162,7 +162,7 @@ const Home: React.FC = () => {
                 </div>
                 <div className="text-right">
                   <p className={`${game.color} font-bold`}>{game.prize}</p>
-                  <p className="text-[10px] text-slate-500">PRIZE POOL</p>
+                  <p className="text-[10px] text-slate-500">prize pool growing every day</p>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4 py-3 border-y border-white/5">

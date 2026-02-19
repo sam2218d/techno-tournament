@@ -17,7 +17,7 @@ export const TOURNAMENT_CONFIG = {
     hero: {
         titleLine1: "BATTLE FOR",
         titleLine2: "GLORY", // This part is styled with the primary color and italic
-        description: "Join the elite circle of mobile esports. Compete against the best and claim your legacy.",
+        description: "All players must play without any cheat. If any player is found using any kind of hack or panel, the whole team will be disqualified. On the final match, the team members must be present on the TCEA campus. At least 2 players must be present on the campus during the final match mandatory. ",
     },
 
     prizePool: {
@@ -29,7 +29,7 @@ export const TOURNAMENT_CONFIG = {
 
     // Countdown Timer Target Date
     // Format: YYYY-MM-DDTHH:mm:ss
-    countdownTarget: "2023-10-30T18:00:00",
+    countdownTarget: "2026-02-27T13:00:00",
 
     // Creator Credits
     creator: {
@@ -58,8 +58,8 @@ export const GAMES_CONFIG = {
         name: 'Free Fire',
         fee: 200, // Entry fee in currency
         prize: '₹2500',
-        date: 'Oct 25, 2023',
-        time: '20:00 GMT',
+        date: 'feb 27, 2026',
+        time: '13:00',
         slotsTotal: 100,
         slotsFilled: 42,
         color: 'text-orange-500',
@@ -75,8 +75,8 @@ export const GAMES_CONFIG = {
         name: 'BGMI',
         fee: 200,
         prize: '₹2500',
-        date: 'Oct 28, 2023',
-        time: '15:30 GMT',
+        date: 'feb 27, 2026',
+        time: '13:00',
         slotsTotal: 100,
         slotsFilled: 88,
         color: 'text-green-500',
