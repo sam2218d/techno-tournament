@@ -14,8 +14,7 @@ const Register: React.FC = () => {
 
   const [game, setGame] = useState<GameType>(
     initialGameId === 'bgmi' ? GameType.BGMI :
-      initialGameId === 'mlbb' ? GameType.MOBILE_LEGENDS :
-        GameType.FREE_FIRE
+      GameType.FREE_FIRE
   );
 
   const [teamName, setTeamName] = useState('');

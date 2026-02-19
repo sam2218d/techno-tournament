@@ -85,22 +85,5 @@ export const GAMES_CONFIG = {
         shadowColor: 'shadow-[0_4px_20px_rgba(255,204,0,0.3)]',
         bgGradient: 'from-green-900/20 to-transparent',
         image: 'https://tse1.mm.bing.net/th/id/OIP.UbtgBS_nwpNZyNGfsF5laQHaEK?rs=1&pid=ImgDetMain&o=7&rm=3'
-    },
-    [GameType.MOBILE_LEGENDS]: {
-        id: 'mlbb',
-        name: 'Mobile Legends',
-        fee: 100,
-        prize: '₹5000',
-        date: 'Oct 30, 2023',
-        time: '18:00 GMT',
-        slotsTotal: 64,
-        slotsFilled: 12,
-        color: 'text-purple-500',
-        borderColor: 'border-purple-500',
-        neonBorder: 'neon-border-purple',
-        accentColor: 'bg-accent-purple',
-        shadowColor: 'shadow-[0_4px_20px_rgba(168,85,247,0.3)]',
-        bgGradient: 'from-purple-900/20 to-transparent',
-        image: 'https://tse1.mm.bing.net/th/id/OIP.C4Dw0hSHxTHI_HRlSaQBxQHaDt?rs=1&pid=ImgDetMain&o=7&rm=3'
     }
 };

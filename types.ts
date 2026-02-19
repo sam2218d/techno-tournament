@@ -1,7 +1,6 @@
 export enum GameType {
   FREE_FIRE = 'Free Fire',
-  BGMI = 'BGMI',
-  MOBILE_LEGENDS = 'Mobile Legends'
+  BGMI = 'BGMI'
 }
 
 export enum PaymentStatus {
