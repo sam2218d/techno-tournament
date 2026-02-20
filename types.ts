@@ -1,6 +1,5 @@
 export enum GameType {
-  FREE_FIRE = 'Free Fire',
-  BGMI = 'BGMI'
+  FREE_FIRE = 'Free Fire'
 }
 
 export enum PaymentStatus {

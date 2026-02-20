@@ -304,10 +304,7 @@ const Admin: React.FC = () => {
                       </button>
                     </td>
                     <td className="p-4">
-                      <span className={`text-xs px-2 py-1 rounded border ${team.game === GameType.FREE_FIRE ? 'border-orange-500 text-orange-500' :
-                        team.game === GameType.BGMI ? 'border-green-500 text-green-500' :
-                          'border-purple-500 text-purple-500'
-                        }`}>
+                      <span className={`text-xs px-2 py-1 rounded border ${team.game === GameType.FREE_FIRE ? 'border-orange-500 text-orange-500' : 'border-purple-500 text-purple-500'}`}>
                         {team.game}
                       </span>
                     </td>

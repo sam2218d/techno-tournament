@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { GameType } from '../types';
 import { GAMES_CONFIG, TOURNAMENT_CONFIG } from '../config';
 import { registerTeam, uploadScreenshot } from '../services/supabase';
@@ -7,15 +7,8 @@ import { generateTeamName } from '../services/geminiService';
 import { Button, Input, Select, Card } from '../components/UI';
 
 const Register: React.FC = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const queryParams = new URLSearchParams(location.search);
-  const initialGameId = queryParams.get('game');
-
-  const [game, setGame] = useState<GameType>(
-    initialGameId === 'bgmi' ? GameType.BGMI :
-      GameType.FREE_FIRE
-  );
+  const [game, setGame] = useState<GameType>(GameType.FREE_FIRE);
 
   const [teamName, setTeamName] = useState('');
   const [captainPhone, setCaptainPhone] = useState('');

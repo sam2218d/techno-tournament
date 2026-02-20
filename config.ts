@@ -21,8 +21,8 @@ export const TOURNAMENT_CONFIG = {
     },
 
     prizePool: {
-        baseAmount: 5000,
-        incrementAmount: 1000,
+        baseAmount: 4000,
+        incrementAmount: 0,
         incrementStep: 5,
         status: "Growing every minute"
     },
@@ -56,8 +56,8 @@ export const GAMES_CONFIG = {
     [GameType.FREE_FIRE]: {
         id: 'ff',
         name: 'Free Fire',
-        fee: 200, // Entry fee in currency
-        prize: '₹2500',
+        fee: 100, // Entry fee in currency
+        prize: '₹4000',
         date: 'feb 27, 2026',
         time: '13:00',
         slotsTotal: 100,
@@ -70,21 +70,4 @@ export const GAMES_CONFIG = {
         bgGradient: 'from-orange-900/20 to-transparent',
         image: 'https://wallpapers.com/images/hd/free-fire-hoodie-banner-gpfrxk4b25jk8c0y.jpg'
     },
-    [GameType.BGMI]: {
-        id: 'bgmi',
-        name: 'BGMI',
-        fee: 200,
-        prize: '₹2500',
-        date: 'feb 27, 2026',
-        time: '13:00',
-        slotsTotal: 100,
-        slotsFilled: 88,
-        color: 'text-green-500',
-        borderColor: 'border-green-500',
-        neonBorder: 'neon-border-yellow', // Using yellow for BGMI as per Stitch design
-        accentColor: 'bg-accent-yellow',
-        shadowColor: 'shadow-[0_4px_20px_rgba(255,204,0,0.3)]',
-        bgGradient: 'from-green-900/20 to-transparent',
-        image: 'https://tse1.mm.bing.net/th/id/OIP.UbtgBS_nwpNZyNGfsF5laQHaEK?rs=1&pid=ImgDetMain&o=7&rm=3'
-    }
 };
