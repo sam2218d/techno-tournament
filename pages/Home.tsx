@@ -133,23 +133,75 @@ const Home: React.FC = () => {
               </div>
             </div>
             <div className="p-5 space-y-4">
-              <div className="flex justify-between items-start">
+              <div className="flex flex-col items-center text-center gap-3">
                 <div>
                   <h3 className="text-lg font-bold">Survival Pro Series</h3>
                   <p className="text-xs text-slate-400">{game.date}, {game.time}</p>
                 </div>
-                <div className="text-right">
-                  <p className={`${game.color} font-bold`}>{game.prize}</p>
-                  <p className="text-[10px] text-slate-500">prize pool growing every day</p>
-                </div>
+                <button
+                  onClick={() => navigate(`/register?game=${game.id}`)}
+                  className={`w-full py-3 ${game.accentColor} text-white rounded-xl text-base font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all ${game.shadowColor}`}
+                >
+                  <span className="material-symbols-outlined">bolt</span> Join Now
+                </button>
               </div>
-              <div className="grid grid-cols-2 gap-4 py-3 border-y border-white/5">
-                <div>
-                  <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Entry Fee</p>
-                  <p className="font-bold text-sm">{game.fee > 0 ? `₹${game.fee}` : 'Free'}</p>
-                </div>
 
+              {/* Game Info Block */}
+              <div className="space-y-1 py-3 border-y border-white/5">
+                <p className="text-sm font-semibold text-white">
+                  <span className="text-slate-400">🎮 Game: </span>Garena {game.name}
+                </p>
+                <p className="text-sm font-semibold text-white">
+                  <span className="text-slate-400">💵 Entry Fee: </span>
+                  {game.fee > 0 ? `₹${game.fee} only` : 'Free'}
+                </p>
+                <p className={`text-sm font-semibold ${game.color}`}>
+                  <span className="text-slate-400">🏆 Prize Pool: </span>{game.prize}
+                </p>
               </div>
+
+              {/* Prize Breakdown */}
+              {'prizeBreakdown' in game && Array.isArray((game as any).prizeBreakdown) && (
+                <div className="space-y-1">
+                  {(game as any).prizeBreakdown.map((item: { place: string; prize: string; extra: string }, idx: number) => (
+                    <div key={idx} className="flex items-center gap-2 text-sm">
+                      <span className={`font-black w-6 text-center ${idx === 0 ? 'text-yellow-400' : idx === 1 ? 'text-slate-300' : 'text-orange-400'
+                        }`}>{idx + 1}</span>
+                      <span className="text-white font-semibold">{item.place} − {item.prize} + {item.extra}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Point System */}
+              {'pointSystem' in game && (game as any).pointSystem && (
+                <div className="rounded-xl overflow-hidden border border-white/10">
+                  {/* Header */}
+                  <div className="bg-primary/20 px-4 py-2 flex items-center justify-between">
+                    <span className="text-xs font-black uppercase tracking-widest text-white">💀 Kill = {(game as any).pointSystem.killPoints} Point</span>
+                    <span className="text-[10px] text-slate-400 uppercase tracking-wider">Placement Points</span>
+                  </div>
+                  {/* Table Header */}
+                  <div className="grid grid-cols-2 px-4 py-1 bg-white/5">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Rank</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 text-right">Points</span>
+                  </div>
+                  {/* Rows */}
+                  <div className="divide-y divide-white/5">
+                    {(game as any).pointSystem.rankPoints.map((row: { rank: string; points: number }, idx: number) => (
+                      <div key={idx} className={`grid grid-cols-2 px-4 py-1.5 ${idx === 0 ? 'bg-yellow-500/10' : idx === 1 ? 'bg-slate-400/5' : idx === 2 ? 'bg-orange-500/5' : ''}`}>
+                        <span className={`text-sm font-bold ${idx === 0 ? 'text-yellow-400' : idx === 1 ? 'text-slate-300' : idx === 2 ? 'text-orange-400' : 'text-slate-300'}`}>
+                          {row.rank}
+                        </span>
+                        <span className={`text-sm font-bold text-right ${row.points > 0 ? 'text-green-400' : 'text-slate-500'}`}>
+                          {row.points > 0 ? `+${row.points}` : row.points}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <button
                 onClick={() => navigate(`/register?game=${game.id}`)}
                 className={`w-full py-3 ${game.accentColor} text-white rounded-lg font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all ${game.shadowColor}`}
@@ -161,19 +213,7 @@ const Home: React.FC = () => {
         ))}
       </section>
 
-      {/* Stats Grid */}
-      <section className="p-6 grid grid-cols-2 gap-4">
-        <div className="bg-surface-dark p-4 rounded-xl border border-white/5">
-          <span className="material-symbols-outlined text-primary mb-2">groups</span>
-          <p className="text-2xl font-bold">128K</p>
-          <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Active Players</p>
-        </div>
-        <div className="bg-surface-dark p-4 rounded-xl border border-white/5">
-          <span className="material-symbols-outlined text-primary mb-2">military_tech</span>
-          <p className="text-2xl font-bold">1.2M</p>
-          <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Prizes Distributed</p>
-        </div>
-      </section>
+
     </div>
   );
 };
