@@ -92,7 +92,7 @@ const Register: React.FC = () => {
           </p>
           <div className="space-y-4">
             <a
-              href="https://chat.whatsapp.com/invite/placeholder"
+              href={TOURNAMENT_CONFIG.whatsappGroupLink}
               target="_blank"
               rel="noreferrer"
               className="block w-full bg-[#25D366] text-white font-bold py-3 rounded hover:bg-[#128C7E] transition-colors"

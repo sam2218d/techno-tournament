@@ -39,6 +39,9 @@ export const TOURNAMENT_CONFIG = {
         instagram: "https://www.instagram.com/samrat_chowdhury___?igsh=NTc4MTIwNjQ2YQ=="
     },
 
+    // WhatsApp Group Link (shown after registration)
+    whatsappGroupLink: "https://chat.whatsapp.com/IPxvhd2cKTu7Kc4nKrll5H",
+
     // Payment Configuration
     payment: {
         // If qrCodeImage is provided, it will be used instead of the generated one.
