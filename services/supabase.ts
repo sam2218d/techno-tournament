@@ -2,10 +2,9 @@
 import { createClient } from '@supabase/supabase-js';
 import { Team, PaymentStatus, GameType } from '../types';
 
-// NOTE: These should be in environment variables in a real production app.
-// For this demo, we'll hardcode them or use import.meta.env
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// Use env variables with hardcoded fallbacks for reliability
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://crgeyeycqzdaxromsohb.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_bfDnH1kzw4H_rtxEgz7niA_F80Inp-E';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
