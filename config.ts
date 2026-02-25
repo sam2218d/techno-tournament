@@ -7,6 +7,7 @@ import { GameType } from './types';
 export const TOURNAMENT_CONFIG = {
     seasonName: "Season 4",
     isLive: true,
+    registrationOpen: false, // Set to true to reopen registration
 
     // Admin Access Control
     // Add your email here to access the admin panel

@@ -138,12 +138,18 @@ const Home: React.FC = () => {
                   <h3 className="text-lg font-bold">Survival Pro Series</h3>
                   <p className="text-xs text-slate-400">{game.date}, {game.time}</p>
                 </div>
-                <button
-                  onClick={() => navigate(`/register?game=${game.id}`)}
-                  className={`w-full py-3 ${game.accentColor} text-white rounded-xl text-base font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all ${game.shadowColor}`}
-                >
-                  <span className="material-symbols-outlined">bolt</span> Join Now
-                </button>
+                {TOURNAMENT_CONFIG.registrationOpen ? (
+                  <button
+                    onClick={() => navigate(`/register?game=${game.id}`)}
+                    className={`w-full py-3 ${game.accentColor} text-white rounded-xl text-base font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all ${game.shadowColor}`}
+                  >
+                    <span className="material-symbols-outlined">bolt</span> Join Now
+                  </button>
+                ) : (
+                  <div className="w-full py-3 bg-red-500/10 border border-red-500/40 text-red-400 rounded-xl text-base font-bold flex items-center justify-center gap-2 cursor-not-allowed">
+                    <span className="material-symbols-outlined">lock</span> Registration Closed
+                  </div>
+                )}
               </div>
 
               {/* Game Info Block */}
@@ -202,12 +208,18 @@ const Home: React.FC = () => {
                 </div>
               )}
 
-              <button
-                onClick={() => navigate(`/register?game=${game.id}`)}
-                className={`w-full py-3 ${game.accentColor} text-white rounded-lg font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all ${game.shadowColor}`}
-              >
-                <span className="material-symbols-outlined">bolt</span> Join Tournament
-              </button>
+              {TOURNAMENT_CONFIG.registrationOpen ? (
+                <button
+                  onClick={() => navigate(`/register?game=${game.id}`)}
+                  className={`w-full py-3 ${game.accentColor} text-white rounded-lg font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all ${game.shadowColor}`}
+                >
+                  <span className="material-symbols-outlined">bolt</span> Join Tournament
+                </button>
+              ) : (
+                <div className="w-full py-3 bg-red-500/10 border border-red-500/40 text-red-400 rounded-lg font-bold flex items-center justify-center gap-2 cursor-not-allowed">
+                  <span className="material-symbols-outlined">lock</span> Registration Closed
+                </div>
+              )}
             </div>
           </div>
         ))}

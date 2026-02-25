@@ -78,6 +78,30 @@ const Register: React.FC = () => {
     }
   };
 
+  // Block registration when closed
+  if (!TOURNAMENT_CONFIG.registrationOpen) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="max-w-md w-full text-center py-16 bg-surface-dark/40 rounded-2xl border border-red-500/30 shadow-2xl space-y-6">
+          <div className="w-20 h-20 bg-red-500/20 rounded-full flex items-center justify-center mx-auto">
+            <span className="material-symbols-outlined text-5xl text-red-400">lock</span>
+          </div>
+          <h2 className="text-3xl font-display font-bold text-white">Registration Closed</h2>
+          <p className="text-slate-400 text-sm leading-relaxed px-4">
+            Registration for <span className="text-white font-bold">{TOURNAMENT_CONFIG.seasonName}</span> is now closed.
+            Stay tuned for future tournaments!
+          </p>
+          <button
+            onClick={() => navigate('/')}
+            className="mt-4 px-8 py-3 bg-primary text-white rounded-xl font-bold hover:brightness-110 transition-all"
+          >
+            Back to Home
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (success) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
